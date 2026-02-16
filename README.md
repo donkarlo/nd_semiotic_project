@@ -1,19 +1,11 @@
+This goal of this project is to support whatever related to semiotics and the most important branch  of semiotics is natural language. It tries to provide facade (a shared) to use different language models, embeddings and vector databases. 
 
-# Berifly
-A Python toolkit for novelty detection in multi-robot sensory data and for grounding symbolic, natural-language-like
-communication to reduce free-energy surprise and improve collective survival.
+It has a priotrization over the hiererachy of the corpora in the file system 
 
-# workflow
-This Python package investigates whether communication through a grounded, natural-language-like system can improve the survival of multi-robot groups by reducing their free-energy surprise rate.
-It provides tools for novelty detection in spatio-temporal sensory streams using models such as Dynamic Bayesian
-Networks (DBNs), LSTMs, and attention-based Transformers.
-Building on detected novelties, the package supports grounding a symbolic language composed of alphabet-level units and
-word-sequence structures, with the aim of enabling robots to minimize surprise more effectively and thus increase
-group-level survival chances.
+For files such as yaml, json etc it considers and priotrize the data entry hierarchies in these files
 
-# Commands
-Running an oldest experiment learn module
+## Conversion
+It devlops a conversion tools between different languages such as translating from yaml to LaTex files
 
-```bash
-sociomind xpr oldest learning 
-```
+## Compiling 
+it compiles the hierarchy of files in a directory to a single source conrpus. For example it can gather all the files in a Tex file and create a single .tex file ready for compilation. 
