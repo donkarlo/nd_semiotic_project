@@ -1,0 +1,10 @@
+rag:
+  system_prompt: |
+    Use CONTEXT to answer.
+    If CONTEXT is irrelevant or empty, answer directly.
+    Be concise and actionable.
+
+policy:
+  vector_min_score: 0.22
+  keyword_min_score: 0.6
+  allow_general_fallback: true
