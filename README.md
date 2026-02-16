@@ -7,6 +7,10 @@ It prioritizes the hierarchy of corpora in the file system.
 
 For files such as YAML, JSON, etc., it considers and prioritizes the data entry hierarchies within these files.
 
+# RAG
+The RAG system uses the given set of folder paths to build chunks and embeddings, and then uses an arbitrary LLM to
+answer users' prompts within the directory system, while considering the hierarchy of the files and their contents.
+
 # Language Conversion
 
 It develops conversion tools between different languages and formats, such as translating from YAML to LaTeX files.
