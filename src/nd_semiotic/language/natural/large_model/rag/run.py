@@ -15,7 +15,7 @@ os.environ.setdefault("GGML_LOG_LEVEL", "ERROR")
 
 def main() -> None:
     cfg = RuntimeConfig(
-        root=Path("/home/donkarlo/Dropbox/repo"),
+        root=Path("/home/donkarlo/Dropbox/repo/nd_me_project"),
         instructions_yaml=Path("instructions.yaml"),
         embed_model_gguf=Path(
             "/home/donkarlo/Dropbox/repo/nd_semiotic_project/data/language/natural/larg_model/nomic-embed-text-v1.5.Q2_K.gguf"),

@@ -1,11 +1,17 @@
-This goal of this project is to support whatever related to semiotics and the most important branch  of semiotics is natural language. It tries to provide facade (a shared) to use different language models, embeddings and vector databases. 
+# Goal
 
-It has a priotrization over the hiererachy of the corpora in the file system 
+The goal of this project is to support everything related to semiotics, with natural language as its most important
+branch. It provides a façade (a shared interface) for using different language models, embeddings, and vector databases.
 
-For files such as yaml, json etc it considers and priotrize the data entry hierarchies in these files
+It prioritizes the hierarchy of corpora in the file system.
 
-## Conversion
-It devlops a conversion tools between different languages such as translating from yaml to LaTex files
+For files such as YAML, JSON, etc., it considers and prioritizes the data entry hierarchies within these files.
 
-## Compiling 
-it compiles the hierarchy of files in a directory to a single source conrpus. For example it can gather all the files in a Tex file and create a single .tex file ready for compilation. 
+## Language Conversion
+
+It develops conversion tools between different languages and formats, such as translating from YAML to LaTeX files.
+
+# Compiling
+
+It compiles the hierarchy of files in a directory into a single source corpus. For example, it can gather all the files
+into a single `.tex` file ready for compilation.
