@@ -1,49 +1,41 @@
-import re
-
-from nd_semiotic.language.natural.large_model.rag.chunk import Chunk
-from typing import List, Tuple
-
-
-# -----------------------------
-# Chunking
-# -----------------------------
+from typing import List
 
 
 class Chunker:
-    def __init__(self, chunk_size_chars: int = 1500, overlap_chars: int = 150, max_chunks_total: int = 5000):
-        self._chunk_size = int(chunk_size_chars)
-        self._overlap = int(overlap_chars)
-        self._max_chunks_total = int(max_chunks_total)
+    def __init__(self, chunk_size_chars: int, chunk_overlap_chars: int):
+        self._chunk_size_chars = int(chunk_size_chars)
+        self._chunk_overlap_chars = int(chunk_overlap_chars)
 
-    def chunk_all(self, docs: List[Tuple[str, str]]) -> List[Chunk]:
-        chunks: List[Chunk] = []
-        for doc_path, text in docs:
-            for ch in self.chunk(doc_path, text):
-                chunks.append(ch)
-                if len(chunks) >= self._max_chunks_total:
-                    return chunks
-        return chunks
+        if self._chunk_size_chars <= 0:
+            raise ValueError("chunk_size_chars must be > 0")
 
-    def chunk(self, doc_path: str, text: str) -> List[Chunk]:
-        s = self._normalize(text)
-        if not s.strip():
+        if self._chunk_overlap_chars < 0:
+            raise ValueError("chunk_overlap_chars must be >= 0")
+
+        if self._chunk_overlap_chars >= self._chunk_size_chars:
+            raise ValueError("chunk_overlap_chars must be < chunk_size_chars")
+
+    def chunk(self, text: str) -> List[str]:
+        normalized_text = text.replace("\r\n", "\n").replace("\r", "\n")
+        if not normalized_text.strip():
             return []
-        out: List[Chunk] = []
-        start = 0
-        cid = 0
-        n = len(s)
-        while start < n:
-            end = min(n, start + self._chunk_size)
-            part = s[start:end].strip()
-            if part:
-                out.append(Chunk(doc_path=doc_path, chunk_id=cid, text=part))
-                cid += 1
-            if end == n:
-                break
-            start = max(0, end - self._overlap)
-        return out
 
-    def _normalize(self, s: str) -> str:
-        s = s.replace("\r\n", "\n").replace("\r", "\n")
-        s = re.sub(r"\n{3,}", "\n\n", s)
-        return s
+        chunks: List[str] = []
+        start_index = 0
+        text_length = len(normalized_text)
+
+        while start_index < text_length:
+            end_index = start_index + self._chunk_size_chars
+            if end_index > text_length:
+                end_index = text_length
+
+            chunk_text = normalized_text[start_index:end_index].strip()
+            if chunk_text:
+                chunks.append(chunk_text)
+
+            if end_index >= text_length:
+                break
+
+            start_index = end_index - self._chunk_overlap_chars
+
+        return chunks

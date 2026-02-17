@@ -1,39 +1,43 @@
-
-from pathlib import Path
-import os
-
-from nd_semiotic.language.natural.large_model.rag.answer_policy import \
-    AnswerPolicy
-from nd_semiotic.language.natural.large_model.rag.app_factory import \
-    AppFactory
-from nd_semiotic.language.natural.large_model.rag.runtime_config import \
-    RuntimeConfig
-
-os.environ.setdefault("LLAMA_LOG_LEVEL", "ERROR")
-os.environ.setdefault("GGML_LOG_LEVEL", "ERROR")
+from nd_semiotic.language.natural.large_model.rag.config import Config
+from nd_semiotic.language.natural.large_model.rag.rag import Rag
 
 
-def main() -> None:
-    cfg = RuntimeConfig(
-        root=Path("/home/donkarlo/Dropbox/repo/nd_me_project"),
-        instructions_yaml=Path("instructions.yaml"),
-        embed_model_gguf=Path(
-            "/home/donkarlo/Dropbox/repo/nd_semiotic_project/data/language/natural/larg_model/nomic-embed-text-v1.5.Q2_K.gguf"),
-        chat_model_gguf=Path(
-            "/home/donkarlo/Dropbox/repo/nd_semiotic_project/data/language/natural/larg_model/qwen2.5-3b-instruct-q4_k_m.gguf"),
-        n_threads=min(4, os.cpu_count() or 4),
-    )
+class RagTerminalApp:
+    def __init__(self):
+        repo_roots = [
+            "/home/donkarlo/Dropbox/repo/nd_robotic_project/data",
+            "/home/donkarlo/Dropbox/repo/nd_me_project/data",
+            "/home/donkarlo/Dropbox/repo/nd_deutsch_learning_project/src",
+            "/home/donkarlo/Dropbox/repo/nd_python_learning_project/src",
+        ]
 
-    policy = AnswerPolicy(
-        vector_min_score=0.22,
-        keyword_min_score=0.6,
-        allow_general_fallback=True,
-        show_sources=True,
-        max_sources=6,
-    )
+        embedding_model_path = "/home/donkarlo/Dropbox/repo/nd_semiotic_project/data/language/natural/larg_model/nomic-embed-text-v1.5.Q2_K.gguf"
+        chat_model_path = "/home/donkarlo/Dropbox/repo/nd_semiotic_project/data/language/natural/larg_model/qwen2.5-3b-instruct-q4_k_m.gguf"
 
-    app = AppFactory(cfg=cfg, policy=policy).build()
-    app.run()
+        cache_dir = "/home/donkarlo/Dropbox/repo/nd_semiotic_project/data/language/natural/larg_model/chache"
+
+        allowed_extensions = [".yaml", ".yml", ".md", ".txt", ".tex"]
+        ignored_directories = [".git", "__pycache__", ".venv", "venv", "node_modules", "build", "dist", "out"]
+
+        self._rag = Rag(Config(repo_roots, embedding_model_path, chat_model_path, cache_dir, allowed_extensions,
+                               ignored_directories))
+
+    def run(self) -> None:
+        self._rag.build_or_load()
+        print("RAG terminal ready.")
+        print("Type your question and press Enter. Type :exit to quit.")
+        while True:
+            question = input("Question: ").strip()
+            if not question:
+                continue
+            if question == ":exit":
+                break
+            reply = self._rag.get_reply(question)
+            print(reply)
+
+
+def main():
+    RagTerminalApp().run()
 
 
 if __name__ == "__main__":
