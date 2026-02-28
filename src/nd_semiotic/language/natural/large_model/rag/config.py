@@ -14,7 +14,7 @@ class Config:
         self.allowed_extensions = allowed_extensions
         self.ignored_directories = ignored_directories
 
-        self.chunk_size_chars = 600
+        self.chunk_size_chars = 1000
         self.chunk_overlap_chars = 200
 
         self.top_k = 8

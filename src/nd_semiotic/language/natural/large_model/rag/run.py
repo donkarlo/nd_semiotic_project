@@ -11,13 +11,13 @@ class RagTerminalApp:
             "/home/donkarlo/Dropbox/repo/nd_python_learning_project/src",
         ]
 
-        embedding_model_path = "/home/donkarlo/Dropbox/repo/nd_semiotic_project/data/language/natural/larg_model/nomic-embed-text-v1.5.Q2_K.gguf"
-        chat_model_path = "/home/donkarlo/Dropbox/repo/nd_semiotic_project/data/language/natural/larg_model/qwen2.5-3b-instruct-q4_k_m.gguf"
+        embedding_model_path = "/data/language/natural/large_model/nomic-embed-text-v1.5.Q2_K.gguf"
+        chat_model_path = "/data/language/natural/large_model/qwen2.5-3b-instruct-q4_k_m.gguf"
 
-        cache_dir = "/home/donkarlo/Dropbox/repo/nd_semiotic_project/data/language/natural/larg_model/chache"
+        cache_dir = "/data/language/natural/large_model/chache"
 
-        allowed_extensions = [".yaml", ".yml", ".md", ".txt", ".tex"]
-        ignored_directories = [".git", "__pycache__", ".venv", "venv", "node_modules", "build", "dist", "out"]
+        allowed_extensions = [".yaml", ".yml", ".md", ".txt", ".composing"]
+        ignored_directories = [".git", "__pycache__", ".venv", "venv", "node_modules", "composing", "dist", "out"]
 
         self._rag = Rag(Config(repo_roots, embedding_model_path, chat_model_path, cache_dir, allowed_extensions,
                                ignored_directories))

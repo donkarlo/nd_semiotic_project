@@ -11,6 +11,12 @@ For files such as YAML, JSON, etc., it considers and prioritizes the data entry 
 The RAG system uses the given set of folder paths to build chunks and embeddings, and then uses an arbitrary LLM to
 answer users' prompts within the directory system, while considering the hierarchy of the files and their contents.
 
+# Agentic Rag
+This sub package is responsible to assign goals to members to try until they achieve it. 
+
+# Vector databases
+Provides an interface to work with different vector databases without having to learn each of their unique interface
+
 # Language Conversion
 
 It develops conversion tools between different languages and formats, such as translating from YAML to LaTeX files.

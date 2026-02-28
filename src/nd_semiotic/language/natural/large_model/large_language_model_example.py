@@ -44,7 +44,7 @@ class RuntimeConfig:
     embed_model_gguf: Path
     chat_model_gguf: Path
 
-    extensions: Tuple[str, ...] = (".schema.yaml", ".yml", ".tex", ".md", ".txt")
+    extensions: Tuple[str, ...] = (".schema.yaml", ".yml", ".composing", ".md", ".txt")
     max_files: int = 5000
     include_roots: Optional[List[Path]] = None
 
@@ -147,7 +147,7 @@ class FileScanner:
         self._extensions = tuple(e.lower() for e in extensions)
         self._exclude_dirs = set(exclude_dirs) if exclude_dirs else {
             ".git", ".rag_cache", "__pycache__", ".venv", "venv",
-            "node_modules", "build", "dist", "out", ".idea", ".pytest_cache",
+            "node_modules", "composing", "dist", "out", ".idea", ".pytest_cache",
         }
         self._include_roots = include_roots
         self._max_files = int(max_files)
@@ -481,7 +481,7 @@ class RagEngine:
 
         self._exclude_dirs = {
             ".git", ".rag_cache", "__pycache__", ".venv", "venv",
-            "node_modules", "build", "dist", "out", ".idea", ".pytest_cache",
+            "node_modules", "composing", "dist", "out", ".idea", ".pytest_cache",
         }
 
         self._instructions = Instructions(self._cfg.instructions_yaml)
